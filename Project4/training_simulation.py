@@ -83,9 +83,11 @@ class Simulation:
                     if laneRL =="TL2_W3":
 
                         reward = 100
-            
-            
+                else:
 
+                    reward = 0
+            
+            print(current_state,old_action,old_state,reward)
             # saving the data into the memory
             if self.step != 0:
                 self.replay_buffer.push(old_state, old_action, reward, current_state)
@@ -107,8 +109,8 @@ class Simulation:
 
             # saving only the meaningful reward to better see if the agent is behaving correctly
 
-            if reward < 0:
-                sum_reward += reward
+            
+            sum_reward += reward
 
         avg_reward = sum_reward / self.max_steps
         traci.close()
@@ -216,19 +218,19 @@ class Simulation:
                 speed_HDV = traci.vehicle.getSpeed("HDV")
                 accel_HDV = traci.vehicle.getAcceleration("HDV")
 
-                state[0,1] = pos_RL
-                state[1,1] = speed_RL
-                state[2,1] = pos_HDV
-                state[3,1] = speed_HDV
-                state[4,1] = accel_HDV
+                state[0] = pos_RL
+                state[1] = speed_RL
+                state[2] = pos_HDV
+                state[3] = speed_HDV
+                state[4] = accel_HDV
         
             else:
 
-                state[0,1] = 0
-                state[1,1] = 0
-                state[2,1] = 0
-                state[3,1] = 0
-                state[4,1] = 0
+                state[0] = 0
+                state[1] = 0
+                state[2] = 0
+                state[3] = 0
+                state[4] = 0
         
         return state     
 
